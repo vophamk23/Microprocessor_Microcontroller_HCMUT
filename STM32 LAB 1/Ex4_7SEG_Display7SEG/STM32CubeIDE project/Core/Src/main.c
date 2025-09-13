@@ -19,6 +19,48 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+/* USER CODE BEGIN PD */
+// LED giao thông trên PORTA
+#define LED_RED1_Pin GPIO_PIN_4
+#define LED_RED1_GPIO_Port GPIOA
+
+#define LED_YELLOW1_Pin GPIO_PIN_5
+#define LED_YELLOW1_GPIO_Port GPIOA
+
+#define LED_GREEN1_Pin GPIO_PIN_6
+#define LED_GREEN1_GPIO_Port GPIOA
+
+#define LED_RED2_Pin GPIO_PIN_7
+#define LED_RED2_GPIO_Port GPIOA
+
+#define LED_YELLOW2_Pin GPIO_PIN_8
+#define LED_YELLOW2_GPIO_Port GPIOA
+
+#define LED_GREEN2_Pin GPIO_PIN_9
+#define LED_GREEN2_GPIO_Port GPIOA
+
+// 7-Segment trên PORTB
+#define LED_A_Pin GPIO_PIN_0
+#define LED_A_GPIO_Port GPIOB
+
+#define LED_B_Pin GPIO_PIN_1
+#define LED_B_GPIO_Port GPIOB
+
+#define LED_C_Pin GPIO_PIN_2
+#define LED_C_GPIO_Port GPIOB
+
+#define LED_D_Pin GPIO_PIN_3
+#define LED_D_GPIO_Port GPIOB
+
+#define LED_E_Pin GPIO_PIN_4
+#define LED_E_GPIO_Port GPIOB
+
+#define LED_F_Pin GPIO_PIN_5
+#define LED_F_GPIO_Port GPIOB
+
+#define LED_G_Pin GPIO_PIN_6
+#define LED_G_GPIO_Port GPIOB
+/* USER CODE END PD */
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
