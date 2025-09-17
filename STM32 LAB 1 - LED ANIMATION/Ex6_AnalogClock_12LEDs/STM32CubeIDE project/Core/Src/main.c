@@ -19,6 +19,42 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+// LED trên PORTA
+#define LED0_Pin GPIO_PIN_4
+#define LED0_GPIO_Port GPIOA
+
+#define LED1_Pin GPIO_PIN_5
+#define LED1_GPIO_Port GPIOA
+
+#define LED2_Pin GPIO_PIN_6
+#define LED2_GPIO_Port GPIOA
+
+#define LED3_Pin GPIO_PIN_7
+#define LED3_GPIO_Port GPIOA
+
+#define LED4_Pin GPIO_PIN_8
+#define LED4_GPIO_Port GPIOA
+
+#define LED5_Pin GPIO_PIN_9
+#define LED5_GPIO_Port GPIOA
+
+#define LED6_Pin GPIO_PIN_10
+#define LED6_GPIO_Port GPIOA
+
+#define LED7_Pin GPIO_PIN_11
+#define LED7_GPIO_Port GPIOA
+
+#define LED8_Pin GPIO_PIN_12
+#define LED8_GPIO_Port GPIOA
+
+#define LED9_Pin GPIO_PIN_13
+#define LED9_GPIO_Port GPIOA
+
+#define LED10_Pin GPIO_PIN_14
+#define LED10_GPIO_Port GPIOA
+
+#define LED11_Pin GPIO_PIN_15
+#define LED11_GPIO_Port GPIOA
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -33,6 +69,12 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 /* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
@@ -42,14 +84,27 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
+// Mảng chứa các chân LED từ LED0 → LED11
+uint16_t LED_Pins[12] = {
+    LED0_Pin, LED1_Pin, LED2_Pin, LED3_Pin,
+    LED4_Pin, LED5_Pin, LED6_Pin, LED7_Pin,
+    LED8_Pin, LED9_Pin, LED10_Pin, LED11_Pin};
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
+// Hàm tắt tất cả LED
+void TurnOffAllLEDs(void)
+{
+  for (int i = 0; i < 12; i++)
+  {
+    HAL_GPIO_WritePin(GPIOA, LED_Pins[i], SET); // Tắt LED
+  }
+}
 
-/* USER CODE END 0 */
+// Hàm bật LED theo chỉ số
+void TurnOnLED(int index)
+{
+  HAL_GPIO_WritePin(GPIOA, LED_Pins[index], RESET); // Bật LED
+}
 
 /**
  * @brief  The application entry point.
@@ -57,47 +112,34 @@ static void MX_GPIO_Init(void);
  */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
+  TurnOffAllLEDs(); // Đảm bảo tất cả LED tắt khi khởi động
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+  int currentLED = 0; // LED0 = vị trí số 12 trên đồng hồ
+
   while (1)
   {
-    // Bật LED1, tắt LED2
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-    HAL_Delay(2000);
+    // Bật LED hiện tại
+    HAL_GPIO_WritePin(GPIOA, LED_Pins[currentLED], GPIO_PIN_RESET);
+    HAL_Delay(200);
+    // Tắt LED sau khi sáng
+    HAL_GPIO_WritePin(GPIOA, LED_Pins[currentLED], GPIO_PIN_SET);
 
-    // Tắt LED1, bật LED2
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
-    HAL_Delay(2000);
+    // Chuyển sang LED tiếp theo
+    currentLED++;
+    if (currentLED >= 12)
+    {
+      currentLED = 0; // Quay lại LED0 khi hết 12 LED
+    }
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -147,10 +189,12 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5 | GPIO_PIN_6, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED0_Pin | LED1_Pin | LED2_Pin | LED3_Pin | LED4_Pin | LED5_Pin | LED6_Pin | LED7_Pin | LED8_Pin | LED9_Pin | LED10_Pin | LED11_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA5 PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_6;
+  /*Configure GPIO pins : LED0_Pin LED1_Pin LED2_Pin LED3_Pin
+                           LED4_Pin LED5_Pin LED6_Pin LED7_Pin
+                           LED8_Pin LED9_Pin LED10_Pin LED11_Pin */
+  GPIO_InitStruct.Pin = LED0_Pin | LED1_Pin | LED2_Pin | LED3_Pin | LED4_Pin | LED5_Pin | LED6_Pin | LED7_Pin | LED8_Pin | LED9_Pin | LED10_Pin | LED11_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

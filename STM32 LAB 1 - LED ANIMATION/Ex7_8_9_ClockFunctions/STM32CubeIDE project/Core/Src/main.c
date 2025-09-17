@@ -96,11 +96,11 @@ void clearAllClock() {
     HAL_GPIO_WritePin(GPIOA, LED5_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, LED6_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, LED7_Pin, SET);
-    HAL_GPIO_WritePin(GPIOA, LED8_Pin, SET);
+    HALGPIO_WritePin(GPIOA, LED8_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, LED9_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, LED10_Pin, SET);
     HAL_GPIO_WritePin(GPIOA, LED11_Pin, SET);
-}
+}_
 
 // Hàm bật LED theo số thứ tự
 void setNumberOnClock(int index) {
