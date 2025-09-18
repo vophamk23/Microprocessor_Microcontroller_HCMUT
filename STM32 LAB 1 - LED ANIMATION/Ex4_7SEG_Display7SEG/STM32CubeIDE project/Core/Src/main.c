@@ -169,7 +169,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+  counter = 0;
   while (1)
   {
     // LED RED 1 ON, LED GREEN 2 ON AND OTHERS OFF - 5 giây
