@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  00020018  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00003160  00000000  00000000  00020041  2**0
+ 12 .debug_info   00003161  00000000  00000000  00020041  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00000ee6  00000000  00000000  000231a1  2**0
+ 13 .debug_abbrev 00000ee6  00000000  00000000  000231a2  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  14 .debug_aranges 000003e0  00000000  00000000  00024088  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_ranges 00000358  00000000  00000000  00024468  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001562c  00000000  00000000  000247c0  2**0
+ 16 .debug_macro  0001571c  00000000  00000000  000247c0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00004687  00000000  00000000  00039dec  2**0
+ 17 .debug_line   00004684  00000000  00000000  00039edc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00079c4c  00000000  00000000  0003e473  2**0
+ 18 .debug_str    00079c4c  00000000  00000000  0003e560  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000b80bf  2**0
+ 19 .comment      00000053  00000000  00000000  000b81ac  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000d7c  00000000  00000000  000b8114  2**2
+ 20 .debug_frame  00000d7c  00000000  00000000  000b8200  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -77,12 +77,12 @@ Disassembly of section .text:
  8000148:	0800173c 	.word	0x0800173c
 
 0800014c <setTrafficLight>:
-/* USER CODE BEGIN 0 */
 // Hàm bật đèn theo trạng thái
-void setTrafficLight(GPIO_TypeDef* RED_Port, uint16_t RED_Pin,
-                     GPIO_TypeDef* YELLOW_Port, uint16_t YELLOW_Pin,
-                     GPIO_TypeDef* GREEN_Port, uint16_t GREEN_Pin,
-                     enum State state) {
+void setTrafficLight(GPIO_TypeDef *RED_Port, uint16_t RED_Pin,
+                     GPIO_TypeDef *YELLOW_Port, uint16_t YELLOW_Pin,
+                     GPIO_TypeDef *GREEN_Port, uint16_t GREEN_Pin,
+                     enum State state)
+{
  800014c:	b580      	push	{r7, lr}
  800014e:	b084      	sub	sp, #16
  8000150:	af00      	add	r7, sp, #0
@@ -93,52 +93,53 @@ void setTrafficLight(GPIO_TypeDef* RED_Port, uint16_t RED_Pin,
  800015a:	817b      	strh	r3, [r7, #10]
  800015c:	4613      	mov	r3, r2
  800015e:	813b      	strh	r3, [r7, #8]
-    if (state == red) {
+  if (state == red)
  8000160:	f897 3020 	ldrb.w	r3, [r7, #32]
  8000164:	2b00      	cmp	r3, #0
  8000166:	d112      	bne.n	800018e <setTrafficLight+0x42>
-        HAL_GPIO_WritePin(RED_Port, RED_Pin, RESET);      // BẬT đỏ
+  {
+    HAL_GPIO_WritePin(RED_Port, RED_Pin, RESET);     // BẬT đỏ
  8000168:	897b      	ldrh	r3, [r7, #10]
  800016a:	2200      	movs	r2, #0
  800016c:	4619      	mov	r1, r3
  800016e:	68f8      	ldr	r0, [r7, #12]
  8000170:	f000 fec4 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, SET);  // TẮT vàng
+    HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, SET); // TẮT vàng
  8000174:	893b      	ldrh	r3, [r7, #8]
  8000176:	2201      	movs	r2, #1
  8000178:	4619      	mov	r1, r3
  800017a:	6878      	ldr	r0, [r7, #4]
  800017c:	f000 febe 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);    // TẮT xanh
+    HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);   // TẮT xanh
  8000180:	8bbb      	ldrh	r3, [r7, #28]
  8000182:	2201      	movs	r2, #1
  8000184:	4619      	mov	r1, r3
  8000186:	69b8      	ldr	r0, [r7, #24]
  8000188:	f000 feb8 	bl	8000efc <HAL_GPIO_WritePin>
-    else if (state == yellow) {
-        HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);        // TẮT đỏ
-        HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, RESET);// BẬT vàng
-        HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);    // TẮT xanh
-    }
+  {
+    HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);         // TẮT đỏ
+    HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, RESET); // BẬT vàng
+    HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);     // TẮT xanh
+  }
 }
  800018c:	e02c      	b.n	80001e8 <setTrafficLight+0x9c>
-    else if (state == green) {
+  else if (state == green)
  800018e:	f897 3020 	ldrb.w	r3, [r7, #32]
  8000192:	2b01      	cmp	r3, #1
  8000194:	d112      	bne.n	80001bc <setTrafficLight+0x70>
-        HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);        // TẮT đỏ
+    HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);       // TẮT đỏ
  8000196:	897b      	ldrh	r3, [r7, #10]
  8000198:	2201      	movs	r2, #1
  800019a:	4619      	mov	r1, r3
  800019c:	68f8      	ldr	r0, [r7, #12]
  800019e:	f000 fead 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, SET);  // TẮT vàng
+    HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, SET); // TẮT vàng
  80001a2:	893b      	ldrh	r3, [r7, #8]
  80001a4:	2201      	movs	r2, #1
  80001a6:	4619      	mov	r1, r3
  80001a8:	6878      	ldr	r0, [r7, #4]
  80001aa:	f000 fea7 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, RESET);  // BẬT xanh
+    HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, RESET); // BẬT xanh
  80001ae:	8bbb      	ldrh	r3, [r7, #28]
  80001b0:	2200      	movs	r2, #0
  80001b2:	4619      	mov	r1, r3
@@ -146,23 +147,23 @@ void setTrafficLight(GPIO_TypeDef* RED_Port, uint16_t RED_Pin,
  80001b6:	f000 fea1 	bl	8000efc <HAL_GPIO_WritePin>
 }
  80001ba:	e015      	b.n	80001e8 <setTrafficLight+0x9c>
-    else if (state == yellow) {
+  else if (state == yellow)
  80001bc:	f897 3020 	ldrb.w	r3, [r7, #32]
  80001c0:	2b02      	cmp	r3, #2
  80001c2:	d111      	bne.n	80001e8 <setTrafficLight+0x9c>
-        HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);        // TẮT đỏ
+    HAL_GPIO_WritePin(RED_Port, RED_Pin, SET);         // TẮT đỏ
  80001c4:	897b      	ldrh	r3, [r7, #10]
  80001c6:	2201      	movs	r2, #1
  80001c8:	4619      	mov	r1, r3
  80001ca:	68f8      	ldr	r0, [r7, #12]
  80001cc:	f000 fe96 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, RESET);// BẬT vàng
+    HAL_GPIO_WritePin(YELLOW_Port, YELLOW_Pin, RESET); // BẬT vàng
  80001d0:	893b      	ldrh	r3, [r7, #8]
  80001d2:	2200      	movs	r2, #0
  80001d4:	4619      	mov	r1, r3
  80001d6:	6878      	ldr	r0, [r7, #4]
  80001d8:	f000 fe90 	bl	8000efc <HAL_GPIO_WritePin>
-        HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);    // TẮT xanh
+    HAL_GPIO_WritePin(GREEN_Port, GREEN_Pin, SET);     // TẮT xanh
  80001dc:	8bbb      	ldrh	r3, [r7, #28]
  80001de:	2201      	movs	r2, #1
  80001e0:	4619      	mov	r1, r3
@@ -175,12 +176,12 @@ void setTrafficLight(GPIO_TypeDef* RED_Port, uint16_t RED_Pin,
  80001ee:	bd80      	pop	{r7, pc}
 
 080001f0 <display7SEG>:
- *  |     |
  * E|     |C
  *  -----
  *    D
  */
-void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16_t E, uint16_t F, uint16_t G) {
+void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16_t E, uint16_t F, uint16_t G)
+{
  80001f0:	b580      	push	{r7, lr}
  80001f2:	b084      	sub	sp, #16
  80001f4:	af00      	add	r7, sp, #0
@@ -194,10 +195,11 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  8000204:	813b      	strh	r3, [r7, #8]
  8000206:	4613      	mov	r3, r2
  8000208:	80fb      	strh	r3, [r7, #6]
-  if (num == 0) {
+  if (num == 0)
  800020a:	68fb      	ldr	r3, [r7, #12]
  800020c:	2b00      	cmp	r3, #0
  800020e:	d12a      	bne.n	8000266 <display7SEG+0x76>
+  {
     // Hiển thị số 0: bật A,B,C,D,E,F - tắt G
     HAL_GPIO_WritePin(GPIOB, A, GPIO_PIN_RESET); // a - BẬT
  8000210:	897b      	ldrh	r3, [r7, #10]
@@ -248,7 +250,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
   }
 }
  8000264:	e19f      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 1) {
+  else if (num == 1)
  8000266:	68fb      	ldr	r3, [r7, #12]
  8000268:	2b01      	cmp	r3, #1
  800026a:	d12a      	bne.n	80002c2 <display7SEG+0xd2>
@@ -296,7 +298,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  80002bc:	f000 fe1e 	bl	8000efc <HAL_GPIO_WritePin>
 }
  80002c0:	e171      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 2) {
+  else if (num == 2)
  80002c2:	68fb      	ldr	r3, [r7, #12]
  80002c4:	2b02      	cmp	r3, #2
  80002c6:	d12a      	bne.n	800031e <display7SEG+0x12e>
@@ -344,7 +346,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  8000318:	f000 fdf0 	bl	8000efc <HAL_GPIO_WritePin>
 }
  800031c:	e143      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 3) {
+  else if (num == 3)
  800031e:	68fb      	ldr	r3, [r7, #12]
  8000320:	2b03      	cmp	r3, #3
  8000322:	d12a      	bne.n	800037a <display7SEG+0x18a>
@@ -392,7 +394,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  8000374:	f000 fdc2 	bl	8000efc <HAL_GPIO_WritePin>
 }
  8000378:	e115      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 4) {
+  else if (num == 4)
  800037a:	68fb      	ldr	r3, [r7, #12]
  800037c:	2b04      	cmp	r3, #4
  800037e:	d12a      	bne.n	80003d6 <display7SEG+0x1e6>
@@ -440,7 +442,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  80003d0:	f000 fd94 	bl	8000efc <HAL_GPIO_WritePin>
 }
  80003d4:	e0e7      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 5) {
+  else if (num == 5)
  80003d6:	68fb      	ldr	r3, [r7, #12]
  80003d8:	2b05      	cmp	r3, #5
  80003da:	d12a      	bne.n	8000432 <display7SEG+0x242>
@@ -488,7 +490,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  800042c:	f000 fd66 	bl	8000efc <HAL_GPIO_WritePin>
 }
  8000430:	e0b9      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 6) {
+  else if (num == 6)
  8000432:	68fb      	ldr	r3, [r7, #12]
  8000434:	2b06      	cmp	r3, #6
  8000436:	d12a      	bne.n	800048e <display7SEG+0x29e>
@@ -536,7 +538,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  8000488:	f000 fd38 	bl	8000efc <HAL_GPIO_WritePin>
 }
  800048c:	e08b      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 7) {
+  else if (num == 7)
  800048e:	68fb      	ldr	r3, [r7, #12]
  8000490:	2b07      	cmp	r3, #7
  8000492:	d12d      	bne.n	80004f0 <display7SEG+0x300>
@@ -586,7 +588,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  80004e8:	e05d      	b.n	80005a6 <display7SEG+0x3b6>
  80004ea:	bf00      	nop
  80004ec:	40010c00 	.word	0x40010c00
-  else if (num == 8) {
+  else if (num == 8)
  80004f0:	68fb      	ldr	r3, [r7, #12]
  80004f2:	2b08      	cmp	r3, #8
  80004f4:	d12a      	bne.n	800054c <display7SEG+0x35c>
@@ -634,7 +636,7 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
  8000546:	f000 fcd9 	bl	8000efc <HAL_GPIO_WritePin>
 }
  800054a:	e02c      	b.n	80005a6 <display7SEG+0x3b6>
-  else if (num == 9) {
+  else if (num == 9)
  800054c:	68fb      	ldr	r3, [r7, #12]
  800054e:	2b09      	cmp	r3, #9
  8000550:	d129      	bne.n	80005a6 <display7SEG+0x3b6>
@@ -690,9 +692,9 @@ void display7SEG(int num, uint16_t A, uint16_t B, uint16_t C, uint16_t D, uint16
 
 080005b4 <main>:
 /**
-  * @brief  Điểm bắt đầu của ứng dụng
-  * @retval int
-  */
+ * @brief  Điểm bắt đầu của ứng dụng
+ * @retval int
+ */
 int main(void)
 {
  80005b4:	b580      	push	{r7, lr}
@@ -746,8 +748,8 @@ int main(void)
  8000608:	2180      	movs	r1, #128	; 0x80
  800060a:	f7ff fdf1 	bl	80001f0 <display7SEG>
 
-	  // Bật đèn theo trạng thái hiện tại
-	setTrafficLight(LED_RED1_GPIO_Port, LED_RED1_Pin,
+    // Bật đèn theo trạng thái hiện tại
+    setTrafficLight(LED_RED1_GPIO_Port, LED_RED1_Pin,
  800060e:	4b37      	ldr	r3, [pc, #220]	; (80006ec <main+0x138>)
  8000610:	781b      	ldrb	r3, [r3, #0]
  8000612:	9302      	str	r3, [sp, #8]
@@ -760,11 +762,11 @@ int main(void)
  8000620:	2110      	movs	r1, #16
  8000622:	4833      	ldr	r0, [pc, #204]	; (80006f0 <main+0x13c>)
  8000624:	f7ff fd92 	bl	800014c <setTrafficLight>
-	                     LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin,
-	                     LED_GREEN1_GPIO_Port, LED_GREEN1_Pin,
-	                     currentStateVar1);
+                    LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin,
+                    LED_GREEN1_GPIO_Port, LED_GREEN1_Pin,
+                    currentStateVar1);
 
-	setTrafficLight(LED_RED2_GPIO_Port, LED_RED2_Pin,
+    setTrafficLight(LED_RED2_GPIO_Port, LED_RED2_Pin,
  8000628:	4b32      	ldr	r3, [pc, #200]	; (80006f4 <main+0x140>)
  800062a:	781b      	ldrb	r3, [r3, #0]
  800062c:	9302      	str	r3, [sp, #8]
@@ -777,13 +779,12 @@ int main(void)
  800063e:	2180      	movs	r1, #128	; 0x80
  8000640:	482b      	ldr	r0, [pc, #172]	; (80006f0 <main+0x13c>)
  8000642:	f7ff fd83 	bl	800014c <setTrafficLight>
-	                     LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin,
-	                     LED_GREEN2_GPIO_Port, LED_GREEN2_Pin,
-	                     currentStateVar2);
-	 HAL_Delay(1000); // Delay 1 giây
+                    LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin,
+                    LED_GREEN2_GPIO_Port, LED_GREEN2_Pin,
+                    currentStateVar2);
+    HAL_Delay(1000); // Delay 1 giây
  8000646:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  800064a:	f000 f9d5 	bl	80009f8 <HAL_Delay>
-
 
     //-------------------ĐẾM NGƯỢC THỜI GIAN------------------------//
     // Giảm thời gian đếm ngược của cả 2 ngã tư
@@ -802,100 +803,108 @@ int main(void)
 
     // CHUYỂN TRẠNG THÁI ĐÈN Ở NGÃ 1 HƯỚNG ĐÔNG TÂY
     // Nếu hết thời gian đèn đỏ -> chuyển sang xanh lá (3 giây)
-    if (numDisplay1 < 0) {
+    if (numDisplay1 < 0)
  8000662:	4b20      	ldr	r3, [pc, #128]	; (80006e4 <main+0x130>)
  8000664:	681b      	ldr	r3, [r3, #0]
  8000666:	2b00      	cmp	r3, #0
  8000668:	da1b      	bge.n	80006a2 <main+0xee>
-        if (currentStateVar1 == red) {
+    {
+      if (currentStateVar1 == red)
  800066a:	4b20      	ldr	r3, [pc, #128]	; (80006ec <main+0x138>)
  800066c:	781b      	ldrb	r3, [r3, #0]
  800066e:	2b00      	cmp	r3, #0
  8000670:	d106      	bne.n	8000680 <main+0xcc>
-            currentStateVar1 = green;
+      {
+        currentStateVar1 = green;
  8000672:	4b1e      	ldr	r3, [pc, #120]	; (80006ec <main+0x138>)
  8000674:	2201      	movs	r2, #1
  8000676:	701a      	strb	r2, [r3, #0]
-            numDisplay1 = 2;  // Xanh 3s
+        numDisplay1 = 2; // Xanh 3s
  8000678:	4b1a      	ldr	r3, [pc, #104]	; (80006e4 <main+0x130>)
  800067a:	2202      	movs	r2, #2
  800067c:	601a      	str	r2, [r3, #0]
  800067e:	e010      	b.n	80006a2 <main+0xee>
-        }
-        // Nếu hết thời gian đèn xanh lá -> chuyển sang vàng (2 giây)
-        else if (currentStateVar1 == green) {
+      }
+      // Nếu hết thời gian đèn xanh lá -> chuyển sang vàng (2 giây)
+      else if (currentStateVar1 == green)
  8000680:	4b1a      	ldr	r3, [pc, #104]	; (80006ec <main+0x138>)
  8000682:	781b      	ldrb	r3, [r3, #0]
  8000684:	2b01      	cmp	r3, #1
  8000686:	d106      	bne.n	8000696 <main+0xe2>
-            currentStateVar1 = yellow;
+      {
+        currentStateVar1 = yellow;
  8000688:	4b18      	ldr	r3, [pc, #96]	; (80006ec <main+0x138>)
  800068a:	2202      	movs	r2, #2
  800068c:	701a      	strb	r2, [r3, #0]
-            numDisplay1 = 1;  // Vàng 2s
+        numDisplay1 = 1; // Vàng 2s
  800068e:	4b15      	ldr	r3, [pc, #84]	; (80006e4 <main+0x130>)
  8000690:	2201      	movs	r2, #1
  8000692:	601a      	str	r2, [r3, #0]
  8000694:	e005      	b.n	80006a2 <main+0xee>
-        }
-        // Nếu hết thời gian đèn vàng -> chuyển sang đỏ (4 giây)
-        else { // yellow -> red
-            currentStateVar1 = red;
+      }
+      // Nếu hết thời gian đèn vàng -> chuyển sang đỏ (4 giây)
+      else
+      { // yellow -> red
+        currentStateVar1 = red;
  8000696:	4b15      	ldr	r3, [pc, #84]	; (80006ec <main+0x138>)
  8000698:	2200      	movs	r2, #0
  800069a:	701a      	strb	r2, [r3, #0]
-            numDisplay1 = 4;  // Đỏ 4s
+        numDisplay1 = 4; // Đỏ 4s
  800069c:	4b11      	ldr	r3, [pc, #68]	; (80006e4 <main+0x130>)
  800069e:	2204      	movs	r2, #4
  80006a0:	601a      	str	r2, [r3, #0]
-        }
+      }
     }
 
     // CHUYỂN TRẠNG THÁI ĐÈN Ở NGÃ 2 HƯỚNG BẮC NAM
     // Nếu hết thời gian đèn đỏ -> chuyển sang xanh lá (3 giây)
-    if (numDisplay2 < 0) {
+    if (numDisplay2 < 0)
  80006a2:	4b11      	ldr	r3, [pc, #68]	; (80006e8 <main+0x134>)
  80006a4:	681b      	ldr	r3, [r3, #0]
  80006a6:	2b00      	cmp	r3, #0
  80006a8:	da8d      	bge.n	80005c6 <main+0x12>
-        if (currentStateVar2 == red) {
+    {
+      if (currentStateVar2 == red)
  80006aa:	4b12      	ldr	r3, [pc, #72]	; (80006f4 <main+0x140>)
  80006ac:	781b      	ldrb	r3, [r3, #0]
  80006ae:	2b00      	cmp	r3, #0
  80006b0:	d106      	bne.n	80006c0 <main+0x10c>
-            currentStateVar2 = green;
+      {
+        currentStateVar2 = green;
  80006b2:	4b10      	ldr	r3, [pc, #64]	; (80006f4 <main+0x140>)
  80006b4:	2201      	movs	r2, #1
  80006b6:	701a      	strb	r2, [r3, #0]
-            numDisplay2 = 2;  // Xanh 3s
+        numDisplay2 = 2; // Xanh 3s
  80006b8:	4b0b      	ldr	r3, [pc, #44]	; (80006e8 <main+0x134>)
  80006ba:	2202      	movs	r2, #2
  80006bc:	601a      	str	r2, [r3, #0]
  80006be:	e782      	b.n	80005c6 <main+0x12>
-        }
-        // Nếu hết thời gian đèn xanh lá -> chuyển sang vàng (2 giây)
-        else if (currentStateVar2 == green) {
+      }
+      // Nếu hết thời gian đèn xanh lá -> chuyển sang vàng (2 giây)
+      else if (currentStateVar2 == green)
  80006c0:	4b0c      	ldr	r3, [pc, #48]	; (80006f4 <main+0x140>)
  80006c2:	781b      	ldrb	r3, [r3, #0]
  80006c4:	2b01      	cmp	r3, #1
  80006c6:	d106      	bne.n	80006d6 <main+0x122>
-            currentStateVar2 = yellow;
+      {
+        currentStateVar2 = yellow;
  80006c8:	4b0a      	ldr	r3, [pc, #40]	; (80006f4 <main+0x140>)
  80006ca:	2202      	movs	r2, #2
  80006cc:	701a      	strb	r2, [r3, #0]
-            numDisplay2 = 1;  // Vàng 2s
+        numDisplay2 = 1; // Vàng 2s
  80006ce:	4b06      	ldr	r3, [pc, #24]	; (80006e8 <main+0x134>)
  80006d0:	2201      	movs	r2, #1
  80006d2:	601a      	str	r2, [r3, #0]
  80006d4:	e777      	b.n	80005c6 <main+0x12>
-        }
-        // Nếu hết thời gian đèn vàng -> chuyển sang đỏ (4 giây)
-        else { // yellow -> red
-            currentStateVar2 = red;
+      }
+      // Nếu hết thời gian đèn vàng -> chuyển sang đỏ (4 giây)
+      else
+      { // yellow -> red
+        currentStateVar2 = red;
  80006d6:	4b07      	ldr	r3, [pc, #28]	; (80006f4 <main+0x140>)
  80006d8:	2200      	movs	r2, #0
  80006da:	701a      	strb	r2, [r3, #0]
-            numDisplay2 = 4;  // Đỏ 4s
+        numDisplay2 = 4; // Đỏ 4s
  80006dc:	4b02      	ldr	r3, [pc, #8]	; (80006e8 <main+0x134>)
  80006de:	2204      	movs	r2, #4
  80006e0:	601a      	str	r2, [r3, #0]
@@ -909,9 +918,9 @@ int main(void)
 
 080006f8 <SystemClock_Config>:
 /**
-  * @brief Cấu hình đồng hồ hệ thống
-  * @retval None
-  */
+ * @brief Cấu hình đồng hồ hệ thống
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
  80006f8:	b580      	push	{r7, lr}
@@ -933,8 +942,8 @@ void SystemClock_Config(void)
  8000718:	611a      	str	r2, [r3, #16]
 
   /** Khởi tạo các bộ dao động RCC theo các tham số được chỉ định
-  * trong cấu trúc RCC_OscInitTypeDef.
-  */
+   * trong cấu trúc RCC_OscInitTypeDef.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
  800071a:	2302      	movs	r3, #2
  800071c:	61bb      	str	r3, [r7, #24]
@@ -960,11 +969,10 @@ void SystemClock_Config(void)
   }
 
   /** Khởi tạo đồng hồ CPU, AHB và APB buses
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
  800073e:	230f      	movs	r3, #15
  8000740:	607b      	str	r3, [r7, #4]
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
  8000742:	2300      	movs	r3, #0
  8000744:	60bb      	str	r3, [r7, #8]
@@ -998,10 +1006,10 @@ void SystemClock_Config(void)
 	...
 
 08000770 <MX_GPIO_Init>:
-  * @brief Hàm khởi tạo GPIO
-  * @param None
-  * @retval None
-  */
+ * @brief Hàm khởi tạo GPIO
+ * @param None
+ * @retval None
+ */
 static void MX_GPIO_Init(void)
 {
  8000770:	b580      	push	{r7, lr}
@@ -1040,32 +1048,27 @@ static void MX_GPIO_Init(void)
  80007b2:	683b      	ldr	r3, [r7, #0]
 
   /* Cấu hình mức đầu ra GPIO - Tất cả đèn LED bắt đầu ở trạng thái TẮT */
-  HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin|LED_YELLOW1_Pin|LED_GREEN1_Pin|LED_RED2_Pin
+  HAL_GPIO_WritePin(GPIOA, LED_RED1_Pin | LED_YELLOW1_Pin | LED_GREEN1_Pin | LED_RED2_Pin | LED_YELLOW2_Pin | LED_GREEN2_Pin, GPIO_PIN_SET);
  80007b4:	2201      	movs	r2, #1
  80007b6:	f44f 717c 	mov.w	r1, #1008	; 0x3f0
  80007ba:	4816      	ldr	r0, [pc, #88]	; (8000814 <MX_GPIO_Init+0xa4>)
  80007bc:	f000 fb9e 	bl	8000efc <HAL_GPIO_WritePin>
-                          |LED_YELLOW2_Pin|LED_GREEN2_Pin, GPIO_PIN_SET);
 
   /* Cấu hình mức đầu ra cho LED 7 đoạn - Tất cả segment bắt đầu ở trạng thái TẮT */
-  HAL_GPIO_WritePin(GPIOB, LED_A1_Pin|LED_B1_Pin|LED_C1_Pin|LED_D2_Pin
+  HAL_GPIO_WritePin(GPIOB, LED_A1_Pin | LED_B1_Pin | LED_C1_Pin | LED_D2_Pin | LED_E2_Pin | LED_F2_Pin | LED_G2_Pin | LED_D1_Pin | LED_E1_Pin | LED_F1_Pin | LED_G1_Pin | LED_A2_Pin | LED_B2_Pin | LED_C2_Pin, GPIO_PIN_SET);
  80007c0:	2201      	movs	r2, #1
  80007c2:	f643 71ff 	movw	r1, #16383	; 0x3fff
  80007c6:	4814      	ldr	r0, [pc, #80]	; (8000818 <MX_GPIO_Init+0xa8>)
  80007c8:	f000 fb98 	bl	8000efc <HAL_GPIO_WritePin>
-                          |LED_E2_Pin|LED_F2_Pin|LED_G2_Pin|LED_D1_Pin
-                          |LED_E1_Pin|LED_F1_Pin|LED_G1_Pin|LED_A2_Pin
-                          |LED_B2_Pin|LED_C2_Pin, GPIO_PIN_SET);
 
   /* Cấu hình các chân GPIO cho đèn LED giao thông */
-  GPIO_InitStruct.Pin = LED_RED1_Pin|LED_YELLOW1_Pin|LED_GREEN1_Pin|LED_RED2_Pin
+  GPIO_InitStruct.Pin = LED_RED1_Pin | LED_YELLOW1_Pin | LED_GREEN1_Pin | LED_RED2_Pin | LED_YELLOW2_Pin | LED_GREEN2_Pin;
  80007cc:	f44f 737c 	mov.w	r3, #1008	; 0x3f0
  80007d0:	60bb      	str	r3, [r7, #8]
-                          |LED_YELLOW2_Pin|LED_GREEN2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP; // Chế độ đầu ra push-pull
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;  // Chế độ đầu ra push-pull
  80007d2:	2301      	movs	r3, #1
  80007d4:	60fb      	str	r3, [r7, #12]
-  GPIO_InitStruct.Pull = GPIO_NOPULL;         // Không có pull-up/pull-down
+  GPIO_InitStruct.Pull = GPIO_NOPULL;          // Không có pull-up/pull-down
  80007d6:	2300      	movs	r3, #0
  80007d8:	613b      	str	r3, [r7, #16]
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW; // Tốc độ thấp
@@ -1078,12 +1081,9 @@ static void MX_GPIO_Init(void)
  80007e6:	f000 fa0f 	bl	8000c08 <HAL_GPIO_Init>
 
   /* Cấu hình các chân GPIO cho LED 7 đoạn */
-  GPIO_InitStruct.Pin = LED_A1_Pin|LED_B1_Pin|LED_C1_Pin|LED_D2_Pin
+  GPIO_InitStruct.Pin = LED_A1_Pin | LED_B1_Pin | LED_C1_Pin | LED_D2_Pin | LED_E2_Pin | LED_F2_Pin | LED_G2_Pin | LED_D1_Pin | LED_E1_Pin | LED_F1_Pin | LED_G1_Pin | LED_A2_Pin | LED_B2_Pin | LED_C2_Pin;
  80007ea:	f643 73ff 	movw	r3, #16383	; 0x3fff
  80007ee:	60bb      	str	r3, [r7, #8]
-                          |LED_E2_Pin|LED_F2_Pin|LED_G2_Pin|LED_D1_Pin
-                          |LED_E1_Pin|LED_F1_Pin|LED_G1_Pin|LED_A2_Pin
-                          |LED_B2_Pin|LED_C2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;  // Chế độ đầu ra push-pull
  80007f0:	2301      	movs	r3, #1
  80007f2:	60fb      	str	r3, [r7, #12]
@@ -1109,9 +1109,9 @@ static void MX_GPIO_Init(void)
 
 0800081c <Error_Handler>:
 /**
-  * @brief  Hàm này được thực thi khi có lỗi xảy ra.
-  * @retval None
-  */
+ * @brief  Hàm này được thực thi khi có lỗi xảy ra.
+ * @retval None
+ */
 void Error_Handler(void)
 {
  800081c:	b480      	push	{r7}

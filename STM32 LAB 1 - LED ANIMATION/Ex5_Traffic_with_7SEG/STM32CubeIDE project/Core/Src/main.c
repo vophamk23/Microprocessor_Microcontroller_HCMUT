@@ -82,7 +82,7 @@ enum State
 
 // Biến đếm thời gian cho mỗi ngã tư
 int numDisplay1 = 4; // Thời gian đếm ngược cho ngã tư 1 (Đặt thời gian bắt đầu với đèn đỏ 4 giây)
-int numDisplay2 = 3; // Thời gian đếm ngược cho ngã tư 2 (Đặt thời gian bắt đầu với đèn xanh 1 giây)
+int numDisplay2 = 2; // Thời gian đếm ngược cho ngã tư 2 (Đặt thời gian bắt đầu với đèn xanh 1 giây)
 
 // Trạng thái hiện tại của từng ngã tư
 enum State currentStateVar1 = red;   // Ngã tư 1 (bắt đầu) với đèn đỏ
