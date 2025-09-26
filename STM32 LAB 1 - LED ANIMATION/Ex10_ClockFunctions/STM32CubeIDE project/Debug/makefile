@@ -64,8 +64,8 @@ all: main-build
 main-build: CODE\ EX\ 7\ 8\ 9\ 10.elf secondary-outputs
 
 # Tool invocations
-CODE\ EX\ 7\ 8\ 9\ 10.elf: $(OBJS) $(USER_OBJS) C:\Users\ASUS\STM32CubeIDE\workspace_1.7.0\CODE\ EX\ 7\ 8\ 9\ 10\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CODE EX 7 8 9 10.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ASUS\STM32CubeIDE\workspace_1.7.0\CODE EX 7 8 9 10\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CODE EX 7 8 9 10.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CODE\ EX\ 7\ 8\ 9\ 10.elf: $(OBJS) $(USER_OBJS) C:\Users\ASUS\OneDrive\Máy\ tính\Microprocessor_Microcontroller_HCMUT\STM32\ LAB\ 1\ -\ LED\ ANIMATION\Ex10_ClockFunctions\STM32CubeIDE\ project\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "CODE EX 7 8 9 10.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ASUS\OneDrive\Máy tính\Microprocessor_Microcontroller_HCMUT\STM32 LAB 1 - LED ANIMATION\Ex10_ClockFunctions\STM32CubeIDE project\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CODE EX 7 8 9 10.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
