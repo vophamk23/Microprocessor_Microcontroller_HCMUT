@@ -35,37 +35,37 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := CODE EX 7 8 9 10
+BUILD_ARTIFACT_NAME := CODE EX10
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-CODE\ EX\ 7\ 8\ 9\ 10.elf \
+CODE\ EX10.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-CODE\ EX\ 7\ 8\ 9\ 10.list \
+CODE\ EX10.list \
 
 OBJCOPY_HEX += \
-CODE\ EX\ 7\ 8\ 9\ 10.hex \
+CODE\ EX10.hex \
 
 OBJCOPY_BIN += \
-CODE\ EX\ 7\ 8\ 9\ 10.bin \
+CODE\ EX10.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: CODE\ EX\ 7\ 8\ 9\ 10.elf secondary-outputs
+main-build: CODE\ EX10.elf secondary-outputs
 
 # Tool invocations
-CODE\ EX\ 7\ 8\ 9\ 10.elf: $(OBJS) $(USER_OBJS) C:\Users\ASUS\OneDrive\Máy\ tính\Microprocessor_Microcontroller_HCMUT\STM32\ LAB\ 1\ -\ LED\ ANIMATION\Ex10_ClockFunctions\STM32CubeIDE\ project\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CODE EX 7 8 9 10.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ASUS\OneDrive\Máy tính\Microprocessor_Microcontroller_HCMUT\STM32 LAB 1 - LED ANIMATION\Ex10_ClockFunctions\STM32CubeIDE project\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CODE EX 7 8 9 10.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CODE\ EX10.elf: $(OBJS) $(USER_OBJS) C:\Users\ASUS\STM32CubeIDE\workspace_1.7.0\CODE\ EX10\STM32F103C6UX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "CODE EX10.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ASUS\STM32CubeIDE\workspace_1.7.0\CODE EX10\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CODE EX10.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -74,24 +74,24 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-CODE\ EX\ 7\ 8\ 9\ 10.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "CODE EX 7 8 9 10.list"
+CODE\ EX10.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "CODE EX10.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-CODE\ EX\ 7\ 8\ 9\ 10.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "CODE EX 7 8 9 10.hex"
+CODE\ EX10.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "CODE EX10.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-CODE\ EX\ 7\ 8\ 9\ 10.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "CODE EX 7 8 9 10.bin"
+CODE\ EX10.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "CODE EX10.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJCOPY_HEX)$(SIZE_OUTPUT)$(OBJDUMP_LIST)$(EXECUTABLES)$(OBJS)$(S_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(OBJCOPY_BIN) "CODE EX 7 8 9 10.elf"
+	-$(RM) $(OBJCOPY_HEX)$(SIZE_OUTPUT)$(OBJDUMP_LIST)$(EXECUTABLES)$(OBJS)$(S_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(OBJCOPY_BIN) "CODE EX10.elf"
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
