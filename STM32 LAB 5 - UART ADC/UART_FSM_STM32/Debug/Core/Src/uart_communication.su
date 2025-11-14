@@ -1,0 +1,4 @@
+uart_communication.c:43:6:uart_communication_init	4	static
+uart_communication.c:60:6:send_adc_packet	72	static
+uart_communication.c:91:6:uart_communication_fsm	72	static
+uart_communication.c:222:20:get_communication_state	4	static
