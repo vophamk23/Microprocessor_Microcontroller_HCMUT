@@ -104,19 +104,43 @@ void display7SEG(int num) {
 
 ```c
 // Software Timer Implementation
-void setTimer(int index, int duration) {
-    timer_counter[index] = duration / TIMER_CYCLE;
-    timer_flag[index] = 0;
+void setTimer(int index, int value)
+{
+    if (index < MAX_COUNTER)
+    {                                 
+        timer_counter[index] = value;
+        timer_flag[index] = 0;        
+    }
 }
 
-void timerRun(void) {
-    for(int i = 0; i < NUM_TIMERS; i++) {
-        if(timer_counter[i] > 0) {
-            timer_counter[i]--;
-            if(timer_counter[i] <= 0) timer_flag[i] = 1;
+int isTimerExpired(int index)
+{
+    if (index < MAX_COUNTER)
+    { // Kiểm tra chỉ số có hợp lệ không
+        if (timer_flag[index] == 1)
+        {                         
+            timer_flag[index] = 0; 
+            return 1;             
+        }
+    }
+    return 0; 
+}
+
+void timerRun()
+{
+    for (int i = 0; i < MAX_COUNTER; i++)
+    { // Quét qua tất cả các timer
+        if (timer_counter[i] > 0)
+        {                      
+            timer_counter[i]--; 
+            if (timer_counter[i] <= 0)
+            {                      
+                timer_flag[i] = 1; 
+            }
         }
     }
 }
+
 ```
 
 ---
